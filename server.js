@@ -7,7 +7,10 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin:"*",
+}));
+
 app.use(json());
 
 const { parsed: config } = dotenv.config();
