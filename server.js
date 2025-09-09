@@ -8,7 +8,9 @@ const cloudinary = require("cloudinary").v2;
 const app = express();
 
 app.use(cors({
-  origin:"*",
+  origin:"https://gallary-jb-frontend.vercel.app",
+  methods: ["GET", "POST", "DELETE"], 
+    allowedHeaders: ["Content-Type", "Authorization"],  
 }));
 
 app.use(json());
