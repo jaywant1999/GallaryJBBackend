@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://gallary-jb-frontend.vercel.app",
+    origin: ["https://gallary-jb-frontend.vercel.app","http://localhost:2608"],
     methods: ["GET", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
@@ -64,5 +64,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const PORT = config.PORT ;
-app.listen(PORT, console.log(`server is running on port ${PORT}......`));
+const port = config.PORT ;
+app.listen(port, console.log(`server is running on port ${port}......`));
