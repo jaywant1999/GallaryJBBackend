@@ -42,7 +42,7 @@ app.get("/gallery", async (req, res) => {
     return res.send(response.data);
   } catch (error) {
     console.error("Error fetching images:", error.message);
-    res.status(500).json({ error: "Failed to fetch images" });
+    res.status(500).json({ error: "Failed to fetch images" || result.error} );
   }
 });
 
@@ -64,5 +64,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const PORT = 1712;
+const PORT = config.PORT ;
 app.listen(PORT, console.log(`server is running on port ${PORT}......`));
