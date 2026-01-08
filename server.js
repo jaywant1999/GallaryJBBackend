@@ -5,12 +5,12 @@ const { json } = require("body-parser");
 const axios = require("axios");
 const cloudinary = require("cloudinary").v2;
 
-const { parsed: config } = dotenv.config();
-
 const app = express();
 
 app.use(cors());
 app.use(json());
+
+const { parsed: config } = dotenv.config();
 
 cloudinary.config({
   cloud_name: config.CLOUD_NAME,
@@ -58,5 +58,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const port = config.PORT;
-app.listen(port, console.log(`server is running on port ${port}......`));
+const PORT = config.port;
+app.listen(PORT, console.log(`server is running on port ${PORT}......`));
