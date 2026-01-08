@@ -10,9 +10,11 @@ const app = express();
 app.use(
   cors({
     origin: "https://gallary-jb-frontend.vercel.app",
-    credentials: true,
+    methods: ["GET", "POST", "DELETE", "OPTIONS","FETCH"],
   })
 );
+
+app.options("*", cors()); // REQUIRED on Vercel
 
 app.use(json());
 
