@@ -58,5 +58,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const port = config.PORT || 1712;
+const port = 1712;
 app.listen(port, console.log(`server is running on port ${port}......`));
