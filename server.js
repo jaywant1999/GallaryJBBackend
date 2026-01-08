@@ -65,6 +65,7 @@ app.delete("/gallery/:public_id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete image" });
   }
 });
+ 
+const port = config.PORT;
 
-const PORT = 1712;
-app.listen(PORT, console.log(`server is running on port ${PORT}......`));
+app.listen(port, console.log(`server is running on port ${port}......`));
