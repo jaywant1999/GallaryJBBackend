@@ -28,12 +28,14 @@ const auth = {
 
 app.get("/gallery", async (req, res) => {
   try {
-    const result = await cloudinary.search
-      .expression("folder:GalleryJB")
-      .max_results(500)
-      .execute();
-
-    res.json(result);
+    const response = await axios.get(BASE_URL, {
+      auth,
+      params: {
+        expression: "folder:GalleryJB",
+        max_results: 500, 
+      },
+    });
+    return res.send(response.data);
   }
   catch (error) {
     console.error("Error fetching images:", error.message);
