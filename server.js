@@ -5,9 +5,6 @@ const { json } = require("body-parser");
 const axios = require("axios");
 const cloudinary = require("cloudinary").v2;
 
-
-dotenv.config(); 
-
 const app = express();
 
 app.use(cors());
