@@ -7,7 +7,15 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://gallary-jb-frontend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 app.use(json());
 
 const { parsed: config } = dotenv.config();
@@ -58,5 +66,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const port = 1712;
+const port = config.PORT;
 app.listen(port, console.log(`server is running on port ${port}......`));
