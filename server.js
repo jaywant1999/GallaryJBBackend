@@ -17,10 +17,10 @@ cloudinary.config({
   api_secret: config.API_SECRET,
 });
 
-console.log("CLOUD_NAME:", config.cloud_name);
-console.log("API_KEY:", config.api_key ? "SET" : "NOT SET");
+console.log("CLOUD_NAME:", config.CLOUD_NAME);
+console.log("API_KEY:", config.API_KEY ? "SET" : "NOT SET");
 
-const BASE_URL = `https://api.cloudinary.com/v1_1/${config.cloud_name}/resources/search`;
+const BASE_URL = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/resources/search`;
 const auth = {
   username: config.API_KEY,
   password: config.API_SECRET,
@@ -28,14 +28,12 @@ const auth = {
 
 app.get("/gallery", async (req, res) => {
   try {
-    const response = await axios.get(BASE_URL, {
-      auth,
-      params: {
-        expression: "folder:GalleryJB",
-        max_results: 500, 
-      },
-    });
-    return res.send(response.data);
+    const result = await cloudinary.search
+      .expression("folder:GalleryJB")
+      .max_results(500)
+      .execute();
+
+    res.json(result);
   }
   catch (error) {
     console.error("Error fetching images:", error.message);
