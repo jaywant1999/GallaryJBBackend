@@ -31,7 +31,7 @@ app.get("/gallery", async (req, res) => {
     const response = await axios.get(BASE_URL, {
       auth,
       params: {
-        expression: "folder:GalleryJB",
+        expression: "resource_type:image",
         max_results: 500, 
       },
     });
