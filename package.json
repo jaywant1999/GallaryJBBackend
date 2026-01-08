@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon ./server.js"
+    "server": "nodemon ./server.js localhost 1712"
   },
   "author": "",
   "license": "ISC",
