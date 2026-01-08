@@ -16,6 +16,10 @@ cloudinary.config({
   api_key: config.API_KEY,
   api_secret: config.API_SECRET,
 });
+
+console.log("CLOUD_NAME:", process.env.CLOUD_NAME);
+console.log("API_KEY:", process.env.API_KEY ? "SET" : "NOT SET");
+
 const BASE_URL = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/resources/search`;
 const auth = {
   username: config.API_KEY,
