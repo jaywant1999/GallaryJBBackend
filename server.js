@@ -7,19 +7,10 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://gallary-jb-frontend.vercel.app",
-    methods: ["GET", "POST", "DELETE", "OPTIONS","FETCH"],
-  })
-);
-
-app.options("*", cors()); // REQUIRED on Vercel
-
+app.use(cors());
 app.use(json());
 
 const { parsed: config } = dotenv.config();
-
 cloudinary.config({
   cloud_name: config.CLOUD_NAME,
   api_key: config.API_KEY,
@@ -65,7 +56,6 @@ app.delete("/gallery/:public_id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete image" });
   }
 });
- 
-const port = 1712;
 
-app.listen(port, console.log(`server is running on port ${port}......`));
+const PORT = 1712;
+app.listen(PORT, console.log(`server is running on port ${PORT}......`));
