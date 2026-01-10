@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const { json } = require("body-parser");
 const axios = require("axios");
@@ -9,7 +8,6 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://gallary-jb-frontend.vercel.app",
     origin: ["https://gallary-jb-frontend.vercel.app","http://localhost:2608"],
     methods: ["GET", "DELETE"],
     allowedHeaders: ["Content-Type"],
@@ -18,20 +16,19 @@ app.use(
 
 app.use(json());
 
-const { parsed: config } = dotenv.config();
 cloudinary.config({
-  cloud_name: config.CLOUD_NAME,
-  api_key: config.API_KEY,
-  api_secret: config.API_SECRET,
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
-console.log("CLOUD_NAME:", config.CLOUD_NAME);
-console.log("API_KEY:", config.API_KEY ? "SET" : "NOT SET");
+console.log("CLOUD_NAME:", process.env.CLOUD_NAME);
+console.log("API_KEY:", process.env.API_KEY ? "SET" : "NOT SET");
 
-const BASE_URL = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/resources/search`;
+const BASE_URL = `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/resources/search`;
 const auth = {
-  username: config.API_KEY,
-  password: config.API_SECRET,
+  username: process.env.API_KEY,
+  password: process.env.API_SECRET,
 };
 
 app.get("/gallery", async (req, res) => {
@@ -52,10 +49,14 @@ app.get("/gallery", async (req, res) => {
 });
 
 app.delete("/gallery/:public_id", async (req, res) => {
+  if (!process.env.CLOUD_NAME || !process.env.API_KEY || !process.env.API_SECRET) {
+    return res.status(400).json({ error: "Cloudinary environment variables not set. Please set CLOUD_NAME, API_KEY, and API_SECRET in Vercel dashboard." });
+  }
+
   try {
     const public_id = decodeURIComponent(req.params.public_id);
 
-     
+
     const result = await cloudinary.uploader.destroy(public_id);
 
     if (result.result !== "ok") {
@@ -65,6 +66,9 @@ app.delete("/gallery/:public_id", async (req, res) => {
     res.json({ message: "Image deleted successfully", result });
   } catch (error) {
     console.error("Error deleting image:", error.message);
+    if (error.response) {
+      console.error("Cloudinary API response:", error.response.status, error.response.data);
+    }
     res.status(500).json({ error: "Failed to delete image" });
   }
 });
