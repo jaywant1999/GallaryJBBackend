@@ -16,7 +16,6 @@ app.use(
   })
 );
 
-app.use(cors());
 app.use(json());
 
 const { parsed: config } = dotenv.config();
