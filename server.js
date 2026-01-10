@@ -50,7 +50,7 @@ app.get("/gallery", async (req, res) => {
 
 app.delete("/gallery/:public_id", async (req, res) => {
   if (!process.env.CLOUD_NAME || !process.env.API_KEY || !process.env.API_SECRET) {
-    return res.status(400).json({ error: "Cloudinary environment variables not set. Please set CLOUD_NAME, API_KEY, and API_SECRET in Vercel dashboard." });
+    return res.status(400).json({ error: "Check environment variables" });
   }
 
   try {
@@ -73,5 +73,5 @@ app.delete("/gallery/:public_id", async (req, res) => {
   }
 });
 
-const PORT = 1712;
+const PORT = process.env.PORT;
 app.listen(PORT, console.log(`server is running on port ${PORT}......`));
